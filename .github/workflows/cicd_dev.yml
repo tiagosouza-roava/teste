@@ -15,8 +15,14 @@ jobs:
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::develop
       - name: Verify
-        run: echo PIRULITO
+        run: |
+          echo "TESTE"
+          echo "${{steps}}"
+          echo "${{steps.get_version.outputs.VERSION}}"
 
   test:
     name: Test
@@ -26,7 +32,10 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Run unit tests
-        run: echo PIRULITO
+        run: |
+          echo "TESTE"
+          echo "${{needs.lint.steps}}"
+          echo "${{needs.lint.steps.get_version.outputs.VERSION}}"
 
   sonarcloud:
     name: SonarCloud
@@ -66,6 +75,6 @@ jobs:
       - name: Deploy service
         run: |
           echo "TESTE"
-          echo "${{needs.package}}"
+          echo "${{needs.package.steps}}"
           echo "${{needs.package.steps.get_version.outputs.VERSION}}"
 
