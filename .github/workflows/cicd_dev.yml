@@ -7,7 +7,6 @@ on:
 
 env:
   IMAGE: ms.auth
-  VERSION_NAME: ${GITHUB_REF/refs\/tags\//}
 
 jobs:
   lint:
@@ -18,10 +17,10 @@ jobs:
     steps:
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=VERSION::develop
+        run: echo "VERSION_NAME=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
       - name: Verify
         run: |
-          echo "TESTE - ${VERSION_NAME}"
+          echo "TESTE - ${{ env.VERSION_NAME }}"
           echo "${{steps}}"
           echo "${{steps.get_version.outputs.VERSION}}"
 
@@ -34,7 +33,7 @@ jobs:
     steps:
       - name: Run unit tests
         run: |
-          echo "TESTE"
+          echo "TESTE - ${{ env.VERSION_NAME }}"
           echo "${{needs.lint.steps}}"
           echo "${{needs.lint.steps.get_version.outputs.VERSION}}"
           echo "${{steps}}"
@@ -45,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run unit tests
-        run: echo "PIRULITO - ${VERSION_NAME}"
+        run: echo "PIRULITO - ${{ env.VERSION_NAME }}"
 
   build:
     name: Build
