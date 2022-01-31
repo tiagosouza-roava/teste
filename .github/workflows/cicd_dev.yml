@@ -1,5 +1,8 @@
 name: Build, deploy to DEV
 on:
+  push:
+    tags:
+      - "*"
   pull_request:
     types: [opened, reopened]
   push:
