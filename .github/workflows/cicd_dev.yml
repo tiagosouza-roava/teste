@@ -1,13 +1,11 @@
 name: Build, deploy to DEV
 on:
-  push:
-    tags:
-      - "*"
   pull_request:
     types: [opened, reopened]
   push:
     branches: [master,develop]
-
+    tags:
+      - "*"
 env:
   IMAGE: ms.auth
 
