@@ -7,6 +7,7 @@ on:
 
 env:
   IMAGE: ms.auth
+  VERSION_NAME: `echo "VERSION_NAME=${GITHUB_REF/refs\/tags\//}"`
 
 jobs:
   lint:
@@ -15,13 +16,11 @@ jobs:
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Get the version
-        id: get_version
-        run: echo "VERSION_NAME=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
       - name: Verify
         run: |
-          echo "TESTE - ${{ env.VERSION_NAME }}"
-          echo "${{steps}}"
+          echo "VERSION_NAME: ${{env.VERSION_NAME}}"
+          echo "GITHUB_REF_NAME: ${{env.GITHUB_REF_NAME}}"
+          echo "GITHUB_REF_NAME: ${{GITHUB_REF_NAME}}"
           echo "${{steps.get_version.outputs.VERSION}}"
 
   test:
@@ -38,13 +37,6 @@ jobs:
           echo "${{needs.lint.steps.get_version.outputs.VERSION}}"
           echo "${{steps}}"
           echo "${{steps.get_version.outputs.VERSION}}"
-
-  sonarcloud:
-    name: SonarCloud
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run unit tests
-        run: echo "PIRULITO - ${{ env.VERSION_NAME }}"
 
   build:
     name: Build
