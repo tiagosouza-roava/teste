@@ -7,7 +7,7 @@ on:
 
 env:
   IMAGE: ms.auth
-  VERSION_NAME: VERSION::${GITHUB_REF/refs\/tags\//}
+  VERSION_NAME: ${GITHUB_REF/refs\/tags\//}
 
 jobs:
   lint:
