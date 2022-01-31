@@ -7,7 +7,6 @@ on:
 
 env:
   IMAGE: ms.auth
-  VERSION_NAME: "${GITHUB_REF/refs\/tags\//}"
 
 jobs:
   lint:
@@ -18,7 +17,6 @@ jobs:
     steps:
       - name: Verify
         run: |
-          echo "VERSION_NAME: ${{env.VERSION_NAME}}"
           echo "GITHUB_REF_NAME: ${{env.GITHUB_REF_NAME}}"
           echo "GITHUB_REF_NAME: ${{GITHUB_REF_NAME}}"
           echo "${{steps.get_version.outputs.VERSION}}"
